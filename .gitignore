@@ -1,5 +1,7 @@
 # dependencies
 node_modules/
+.gocache/
+.gopath/
 
 # Next.js build output
 .next/
