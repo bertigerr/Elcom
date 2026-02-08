@@ -31,6 +31,7 @@ lerna-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+client_secret_*.json
 
 # tests / coverage
 coverage/
