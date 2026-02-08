@@ -4,10 +4,11 @@
 1. `mail:fetch` pulls Gmail messages (`gmail.users.messages.list/get`) and stores raw RFC822 `.eml` files.
 2. `mail:process` loads a stored email, runs quote detection, extracts line items from text/html/xlsx/pdf, normalizes and matches against local catalog index.
 3. `export:xlsx` renders per-email result table.
+4. `mail:listen` runs as a separate microservice loop (polling) and performs fetch+process+export continuously.
 
 ## 2. Connectors
-- Active MVP connector: `connectors/gmail`.
-- `connectors/imap` is scaffolded with `imapflow` and the same contract for future Yandex/IMAP mailboxes.
+- Active connectors: `connectors/gmail` and `connectors/imap` (imapflow).
+- Listener provider is selected by `MAIL_LISTENER_PROVIDER` (`gmail` or `imap`).
 
 ## 3. Catalog Sync
 - Full sync: `GET /api/v1/product/scroll` with iterative `scrollId` until end.

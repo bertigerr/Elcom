@@ -70,13 +70,18 @@ export interface DetectResult {
   reason: string;
 }
 
-export interface GmailFetchedMessage {
-  provider: 'gmail';
+export type MailProvider = 'gmail' | 'imap';
+
+export interface FetchedMailMessage {
+  provider: MailProvider;
   messageId: string;
   subject: string;
   from: string;
   receivedAt: string;
   raw: Buffer;
 }
+
+export type GmailFetchedMessage = FetchedMailMessage & { provider: 'gmail' };
+export type ImapFetchedMessage = FetchedMailMessage & { provider: 'imap' };
 
 export type IncrementalMode = 'hour_price' | 'hour_stock' | 'day';

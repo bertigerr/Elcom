@@ -1,14 +1,14 @@
 import { logger } from '../../logger.js';
 import { AppDb } from '../../storage/db.js';
 import { MailStoreService } from '../mailStoreService.js';
-import { GmailConnector } from './gmailConnector.js';
+import { ImapConnector } from './imapConnector.js';
 
-export class GmailFetchService {
+export class ImapFetchService {
   private readonly storeService: MailStoreService;
 
   constructor(
     private readonly db: AppDb,
-    private readonly connector: GmailConnector,
+    private readonly connector: ImapConnector,
   ) {
     this.storeService = new MailStoreService(db);
   }
@@ -22,7 +22,7 @@ export class GmailFetchService {
       stored += 1;
     }
 
-    logger.info({ fetched: fetched.length, stored }, 'Gmail fetch completed');
+    logger.info({ fetched: fetched.length, stored }, 'IMAP fetch completed');
     return { fetched: fetched.length, stored };
   }
 }

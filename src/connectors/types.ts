@@ -1,5 +1,5 @@
-import type { GmailFetchedMessage } from '../types.js';
+import type { FetchedMailMessage } from '../types.js';
 
 export interface MailConnector {
-  fetchInbox(options: { label: string; max: number }): Promise<GmailFetchedMessage[]>;
+  fetchInbox(options: { label: string; max: number }): Promise<FetchedMailMessage[]>;
 }

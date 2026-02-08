@@ -12,6 +12,7 @@
     "catalog:incremental-sync": "tsx src/cli/main.ts catalog:incremental-sync",
     "mail:fetch": "tsx src/cli/main.ts mail:fetch",
     "mail:process": "tsx src/cli/main.ts mail:process",
+    "mail:listen": "tsx src/microservices/mail-listener/main.ts",
     "export:xlsx": "tsx src/cli/main.ts export:xlsx"
   },
   "dependencies": {

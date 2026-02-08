@@ -9,6 +9,8 @@ import { ElcomClient } from '../catalog/elcomClient.js';
 import { AppDb } from '../storage/db.js';
 import { GmailConnector } from '../connectors/gmail/gmailConnector.js';
 import { GmailFetchService } from '../connectors/gmail/fetchService.js';
+import { ImapConnector } from '../connectors/imap/imapConnector.js';
+import { ImapFetchService } from '../connectors/imap/fetchService.js';
 import { EmailProcessingService } from '../pipeline/processEmail.js';
 import { exportRowsToXlsx } from '../pipeline/export/xlsxExporter.js';
 import { extractItemsFromInput } from '../pipeline/extract/index.js';
@@ -54,13 +56,12 @@ program
   .option('--label <label>', 'mailbox/label', 'INBOX')
   .option('--max <max>', 'max messages', '50')
   .action(async (opts: { provider: string; label: string; max: string }) => {
-    if (opts.provider !== 'gmail') {
-      throw new Error(`Only gmail provider is active in MVP. Received: ${opts.provider}`);
-    }
-
     const db = new AppDb(config.dbPath);
     try {
-      const fetchService = new GmailFetchService(db, new GmailConnector());
+      const fetchService =
+        opts.provider === 'imap'
+          ? new ImapFetchService(db, new ImapConnector())
+          : new GmailFetchService(db, new GmailConnector());
       const result = await fetchService.fetchAndStore(opts.label, Number(opts.max));
       logger.info(result, 'Mail fetch done');
     } finally {

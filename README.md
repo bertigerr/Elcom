@@ -50,11 +50,34 @@ npm run mail:process -- --batch=20
 npm run export:xlsx -- --emailId=1 --out=./out/result.xlsx
 ```
 
+## Separate mail-listener microservice
+Long-running listener (polling) that continuously:
+1) fetches new emails,
+2) processes quote lines,
+3) writes XLSX outputs to `out/listener/`.
+
+Start:
+```bash
+npm run mail:listen
+```
+
+Configure in `.env`:
+- `MAIL_LISTENER_PROVIDER=gmail|imap`
+- `MAIL_LISTENER_LABEL=INBOX`
+- `MAIL_LISTENER_INTERVAL_SEC=30`
+- `MAIL_LISTENER_FETCH_MAX=20`
+- `MAIL_LISTENER_PROCESS_BATCH=20`
+- `MAIL_LISTENER_AUTO_EXPORT=true`
+
+For IMAP mode also set:
+- `IMAP_HOST`, `IMAP_PORT`, `IMAP_SECURE`, `IMAP_USER`, `IMAP_PASSWORD`
+
 ## CLI commands
 - `catalog:initial-sync`
 - `catalog:incremental-sync --mode=hour_price|hour_stock|day`
 - `mail:fetch --provider=gmail --label=INBOX --max=50`
 - `mail:process --provider=gmail --messageId=...` (or `--batch=...`)
+- `mail:listen` (separate microservice runtime)
 - `export:xlsx --emailId=... --out=...`
 - `run --input ... --type xlsx|pdf|email_text|email_table --output ...`
 
